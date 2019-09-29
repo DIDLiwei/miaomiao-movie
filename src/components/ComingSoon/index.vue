@@ -4,11 +4,11 @@
     <Scroller v-else>
       <ul>
         <li v-for="item in comingList" :key="item.id">
-          <div class="pic_show">
+          <div class="pic_show" @tap="handleToDetail(item.id)">
             <img :src="item.img | setWH('128.180')" />
           </div>
           <div class="info_list">
-            <h2>{{item.nm}}</h2>
+            <h2 @tap="handleToDetail(item.id)">{{item.nm}}</h2>
             <p>
               <span class="person">{{item.wish}}</span> 人想看
             </p>
@@ -34,7 +34,7 @@ export default {
   },
   activated() {
     var cityId = this.$store.state.city.id;
-    if (prevCityId === cityId) {
+    if (this.prevCityId === cityId) {
       return;
     }
     this.isLoading = true;
@@ -47,6 +47,11 @@ export default {
         this.prevCityId = cityId;
       }
     });
+  },
+  methods: {
+    handleToDetail(movieId) {
+      this.$router.push("/movie/detail/2/" + movieId);
+    }
   }
 };
 </script>
